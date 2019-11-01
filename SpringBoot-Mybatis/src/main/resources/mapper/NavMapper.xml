@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.animo.mybatis.mapper.NavMapper">
+
+    <insert id="save" parameterType="com.animo.mybatis.entity.Nav"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into nav (name,pid) values (#{name},#{pid})
+    </insert>
+
+    <insert id="saveList" parameterType="com.animo.mybatis.entity.Nav"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into nav (name,pid) values
+        <foreach collection="list" item="nav" separator=",">
+            (#{nav.name},#{nav.pid})
+        </foreach>
+    </insert>
+
+    <update id="update">
+      update nav set name = #{name} where id = #{id}
+    </update>
+
+    <select id="getById" resultType="com.animo.mybatis.entity.Nav">
+        select id,name from nav where id = #{-parameters}
+    </select>
+
+    <resultMap id="navResultMap" type="com.animo.mybatis.entity.Nav">
+        <id column="id" property="id"></id>
+        <result column="pid" property="pid"></result>
+        <result column="name" property="name"></result>
+    </resultMap>
+
+    <resultMap id="navExtResultMap" type="com.animo.mybatis.entity.ext.NavExt">
+        <id column="one_id" property="id"></id>
+        <result column="one_name" property="name"></result>
+        <result column="one_des" property="des"></result>
+        <collection property="navExtList" ofType="com.animo.mybatis.entity.ext.NavExt">
+            <id column="two_id" property="id"></id>
+            <result column="two_name" property="name"></result>
+            <result column="two_des" property="des"></result>
+            <collection property="navExtList" ofType="com.animo.mybatis.entity.ext.NavExt">
+                <id column="three_id" property="id"></id>
+                <result column="three_name" property="name"></result>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="getByKey" resultMap="navExtResultMap">
+        select one.id as one_id,one.name as one_name ,one.des as one_des,
+two.id as two_id,two.name as two_name,two.des as two_des,
+three.id as three_id,three.name as three_name
+from nav one left join nav two on one.id = two.pid left join nav three on two.id = three.pid where one.key = #{-parameters};
+    </select>
+
+    <select id="getByLikeTest" resultType="com.animo.mybatis.entity.Nav">
+        select * from nav where des like concat(#{test},'%')
+    </select>
+
+</mapper>

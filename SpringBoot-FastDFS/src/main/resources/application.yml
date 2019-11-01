@@ -1,0 +1,5 @@
+fastdfs:
+  connect_timeout_in_seconds: 5
+  network_timeout_in_seconds: 30
+  charset: utf-8
+  tracker_servers: 192.168.168.231:22122
