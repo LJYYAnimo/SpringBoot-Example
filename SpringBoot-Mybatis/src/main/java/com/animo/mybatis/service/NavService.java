@@ -3,12 +3,14 @@ package com.animo.mybatis.service;
 import com.animo.mybatis.entity.Nav;
 import com.animo.mybatis.entity.ext.NavExt;
 import com.animo.mybatis.mapper.NavMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.DebuggingClassWriter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import javax.annotation.Resource;
+import javax.annotation.Resources;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

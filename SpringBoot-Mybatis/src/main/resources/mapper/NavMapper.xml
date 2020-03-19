@@ -50,7 +50,10 @@
         select one.id as one_id,one.name as one_name ,one.des as one_des,
 two.id as two_id,two.name as two_name,two.des as two_des,
 three.id as three_id,three.name as three_name
-from nav one left join nav two on one.id = two.pid left join nav three on two.id = three.pid where one.key = #{-parameters};
+from nav one
+left join nav two on one.id = two.pid
+left join nav three on two.id = three.pid
+ where one.key = #{-parameters};
     </select>
 
     <select id="getByLikeTest" resultType="com.animo.mybatis.entity.Nav">
